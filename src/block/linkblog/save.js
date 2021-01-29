@@ -1,4 +1,5 @@
-import { RichText } from '@wordpress/block-editor';
+// import { RawHTML } from '@wordpress/element';
+const { RawHTML } = wp.element;
 
 /**
  * The save function defines the way in which the different attributes should
@@ -14,17 +15,20 @@ import { RichText } from '@wordpress/block-editor';
  */
 export default function Save( props ) {
 	const {
-		attributes: {
-			content,
-		},
+		// attributes: {
+		// 	showEmbed,
+		// 	embed,
+		// },
 		className,
 	} = props;
 
 	return (
-		<RichText.Content
-			className={ className }
-			tagName="p"
-			value={ content }
-		/>
+		<div className={ className }>
+			{/* { showEmbed && (
+				<RawHTML className="smolblog-linkblog-embed">
+					{ embed }
+				</RawHTML>
+			) } */}
+		</div>
 	);
 }

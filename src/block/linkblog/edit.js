@@ -1,4 +1,4 @@
-import { RichText } from '@wordpress/block-editor';
+import { TextControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import './editor.scss';
 
@@ -15,24 +15,44 @@ import './editor.scss';
 export default function Edit( props ) {
 	const {
 		attributes: {
-			content,
+			sourceUrl,
+			// showEmbed,
 		},
 		className,
 		setAttributes,
+		// isSelected,
 	} = props;
 
 	// Update field content on change.
-	const onChangeContent = ( newContent ) => {
-		setAttributes( { content: newContent } );
+	const onChangeContent = ( newUrl ) => {
+		setAttributes( {
+			sourceUrl: newUrl,
+			// embed: `<p><a href="${ sourceUrl }">Link source</a></p>`,
+		} );
 	};
 
+	const hasLink = '' !== sourceUrl;
+
 	return (
-		<RichText
-			tagName="p"
-			className={ className }
-			onChange={ onChangeContent }
-			value={ content }
-			placeholder={ __( 'Smolblog Linkblog Demo', 'linkblog' ) }
-		/>
+		<div className={ className }>
+			<TextControl
+				label={ __( 'Post Link', 'linkblog' ) }
+				className={ className }
+				value={ sourceUrl }
+				onChange={ onChangeContent }
+			/>
+			{/* { isSelected && hasLink && (
+				<ToggleControl
+					label="Embed link in post"
+					checked={ showEmbed }
+					onChange={ () => setAttributes( { showEmbed: ! showEmbed } ) }
+				/>
+			) }
+			{ showEmbed && (
+				<div className="smolblog-linkblog-embed">
+					<p><a href={ sourceUrl }>Link source</a></p>
+				</div>
+			) } */}
+		</div>
 	);
 }

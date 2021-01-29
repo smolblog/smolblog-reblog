@@ -85,5 +85,13 @@ function register_block() {
 			true
 		);
 	}
+
+	register_post_meta( 'post', 'smolblog_linkblog_url', [
+		'type'              => 'string',
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'show_in_rest'      => true,
+		'single'            => true,
+	]);
 }
 add_action( 'init', __NAMESPACE__ . '\register_block' );

@@ -20,10 +20,18 @@ registerBlockType( 'smolblog/linkblog', {
 		__( 'Linkblog', 'linkblog' ),
 	],
 	attributes: {
-		content: {
-			type: 'array',
-			source: 'children',
-			selector: 'p',
+		sourceUrl: {
+			type: 'string',
+			source: 'meta',
+			meta: 'smolblog_linkblog_url',
+		},
+		showEmbed: {
+			type: 'boolean',
+		},
+		embed: {
+			type: 'string',
+			source: 'html',
+			selector: 'div.smolblog-linkblog-embed',
 		},
 	},
 	edit,
