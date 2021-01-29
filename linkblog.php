@@ -96,18 +96,32 @@ function register_block() {
 }
 add_action( 'init', __NAMESPACE__ . '\register_block' );
 
-function filter_permalink( $permalink ) {
-	$post_id = \url_to_postid( $permalink );
-	if ( 0 <= $post_id ) {
-		die('ERROR could not find post to match '.$permalink);
-		return $permalink;
+function get_smol_link() {
+	$post_id = get_the_id();
+	if ( ! $post_id ) {
+		return '';
 	}
 
 	$smol_link = \get_post_meta( $post_id, 'smolblog_linkblog_url', true );
+	return $smol_link;
+}
+
+function filter_permalink( $permalink ) {
+	$smol_link = get_smol_link();
 	if ( empty( $smol_link ) ) {
 		return $permalink;
 	}
-	wp_die( $smol_link );
 	return $smol_link;
 }
-// add_filter( 'the_permalink_rss', __NAMESPACE__ . '\filter_permalink', 10, 1 );
+add_filter( 'the_permalink_rss', __NAMESPACE__ . '\filter_permalink', 10, 1 );
+
+function filter_content( $content ) {
+	$smol_link = get_smol_link();
+	if ( empty( $smol_link ) ) {
+		return $content;
+	}
+
+	$post_permalink = get_the_permalink();
+	return $content . "<p><a href=\"$post_permalink\">View on blog</a></p>";
+}
+add_filter( 'the_content_feed', __NAMESPACE__ . '\filter_content', 10, 1 );
