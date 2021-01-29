@@ -9,6 +9,7 @@
  * Text Domain:     linkblog
  *
  * @package         Smolblog\Linkblog
+ * @since           1.0.0
  */
 
 namespace Smolblog\Linkblog;
@@ -68,11 +69,11 @@ function register_block() {
 	}
 
 	// Register block with WordPress.
-	register_block_type( 'smolblog/linkblog', array(
+	register_block_type( 'smolblog/linkblog', [
 		'editor_script' => 'smolblog-linkblog-editor-script',
 		'editor_style'  => 'smolblog-linkblog-editor-style',
 		'style'         => 'smolblog-linkblog-style',
-	) );
+	] );
 
 	// Register frontend script.
 	if ( file_exists( plugin_dir_path( __FILE__ ) . $frontend_script ) ) {
