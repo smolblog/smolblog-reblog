@@ -95,3 +95,19 @@ function register_block() {
 	]);
 }
 add_action( 'init', __NAMESPACE__ . '\register_block' );
+
+function filter_permalink( $permalink ) {
+	$post_id = \url_to_postid( $permalink );
+	if ( 0 <= $post_id ) {
+		die('ERROR could not find post to match '.$permalink);
+		return $permalink;
+	}
+
+	$smol_link = \get_post_meta( $post_id, 'smolblog_linkblog_url', true );
+	if ( empty( $smol_link ) ) {
+		return $permalink;
+	}
+	wp_die( $smol_link );
+	return $smol_link;
+}
+// add_filter( 'the_permalink_rss', __NAMESPACE__ . '\filter_permalink', 10, 1 );
