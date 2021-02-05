@@ -16,43 +16,57 @@ export default function Edit( props ) {
 	const {
 		attributes: {
 			sourceUrl,
-			// showEmbed,
+			showEmbed,
+			title,
 		},
 		className,
 		setAttributes,
-		// isSelected,
+		isSelected,
 	} = props;
 
 	// Update field content on change.
 	const onChangeContent = ( newUrl ) => {
 		setAttributes( {
 			sourceUrl: newUrl,
-			// embed: `<p><a href="${ sourceUrl }">Link source</a></p>`,
+			embed: `<p><a href="${ sourceUrl }">Link source</a></p>`,
 		} );
 	};
 
+	const onChangeTitle = ( newTitle ) => {
+		setAttributes( { title: newTitle } );
+		wp.data.dispatch('core/editor').editPost({title: newTitle});
+	}
+
 	const hasLink = '' !== sourceUrl;
+	if ( ! title ) {
+		setAttributes( { title: wp.data.select('core/editor').getEditedPostAttribute('title') } );
+	}
 
 	return (
 		<div className={ className }>
 			<TextControl
 				label={ __( 'Post Link', 'linkblog' ) }
-				className={ className }
 				value={ sourceUrl }
 				onChange={ onChangeContent }
 			/>
-			{/* { isSelected && hasLink && (
+			{ isSelected && hasLink && (
 				<ToggleControl
 					label="Embed link in post"
 					checked={ showEmbed }
 					onChange={ () => setAttributes( { showEmbed: ! showEmbed } ) }
 				/>
 			) }
-			{ showEmbed && (
+			{ showEmbed ? (
 				<div className="smolblog-linkblog-embed">
 					<p><a href={ sourceUrl }>Link source</a></p>
 				</div>
-			) } */}
+			) : (
+				<TextControl
+					label={ __( 'Link Text', 'linkblog' ) }
+					value={ title }
+					onChange={ onChangeTitle }
+				/>
+			) }
 		</div>
 	);
 }

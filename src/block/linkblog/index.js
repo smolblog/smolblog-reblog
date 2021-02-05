@@ -33,6 +33,9 @@ registerBlockType( 'smolblog/linkblog', {
 			source: 'html',
 			selector: 'div.smolblog-linkblog-embed',
 		},
+		title: {
+			type: 'string',
+		}
 	},
 	edit,
 	save,

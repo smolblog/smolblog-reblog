@@ -15,20 +15,20 @@ const { RawHTML } = wp.element;
  */
 export default function Save( props ) {
 	const {
-		// attributes: {
-		// 	showEmbed,
-		// 	embed,
-		// },
+		attributes: {
+			showEmbed,
+			embed,
+		},
 		className,
 	} = props;
 
 	return (
 		<div className={ className }>
-			{/* { showEmbed && (
+			{ showEmbed && (
 				<RawHTML className="smolblog-linkblog-embed">
 					{ embed }
 				</RawHTML>
-			) } */}
+			) }
 		</div>
 	);
 }
