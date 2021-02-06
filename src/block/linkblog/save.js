@@ -1,5 +1,6 @@
 // import { RawHTML } from '@wordpress/element';
 const { RawHTML } = wp.element;
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -17,7 +18,6 @@ export default function Save( props ) {
 	const {
 		attributes: {
 			showEmbed,
-			embed,
 		},
 		className,
 	} = props;
@@ -25,9 +25,7 @@ export default function Save( props ) {
 	return (
 		<div className={ className }>
 			{ showEmbed && (
-				<RawHTML className="smolblog-linkblog-embed">
-					{ embed }
-				</RawHTML>
+				<InnerBlocks.Content />
 			) }
 		</div>
 	);

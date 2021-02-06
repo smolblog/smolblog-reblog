@@ -29,7 +29,6 @@ export default function Edit( props ) {
 	const onChangeContent = ( newUrl ) => {
 		setAttributes( {
 			sourceUrl: newUrl,
-			embed: `<p><a href="${ sourceUrl }">Link source</a></p>`,
 		} );
 	};
 
@@ -58,13 +57,11 @@ export default function Edit( props ) {
 				/>
 			) }
 			{ showEmbed ? (
-				<div className="smolblog-linkblog-embed">
-					<InnerBlocks
-						allowedBlocks={['core/embed']}
-						template={[['core/embed', {url: sourceUrl}]]}
-						templateLock="all"
-					/>
-				</div>
+				<InnerBlocks
+					allowedBlocks={['core/embed']}
+					template={[['core/embed', {url: sourceUrl}]]}
+					templateLock="all"
+				/>
 			) : (
 				<TextControl
 					label={ __( 'Link Text', 'linkblog' ) }
