@@ -1,5 +1,6 @@
 import { TextControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { InnerBlocks } from '@wordpress/block-editor';
 import './editor.scss';
 
 /**
@@ -58,7 +59,11 @@ export default function Edit( props ) {
 			) }
 			{ showEmbed ? (
 				<div className="smolblog-linkblog-embed">
-					<p><a href={ sourceUrl }>Link source</a></p>
+					<InnerBlocks
+						allowedBlocks={['core/embed']}
+						template={[['core/embed', {url: sourceUrl}]]}
+						templateLock="all"
+					/>
 				</div>
 			) : (
 				<TextControl
