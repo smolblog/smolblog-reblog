@@ -1,6 +1,3 @@
-import { TextControl, ToggleControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
-import { InnerBlocks } from '@wordpress/block-editor';
 import './editor.scss';
 
 /**
@@ -16,6 +13,7 @@ import './editor.scss';
 export default function Edit( props ) {
 	const {
 		attributes: {
+			isReblog,
 			sourceUrl,
 			showEmbed,
 			title,
@@ -25,50 +23,87 @@ export default function Edit( props ) {
 		isSelected,
 	} = props;
 
+	const {
+		i18n: {
+			__,
+		},
+		blockEditor: {
+			InnerBlocks,
+		},
+		components: {
+			TextControl,
+			ToggleControl,
+		},
+		data: {
+			select,
+			dispatch,
+		},
+	} = wp;
+
+	const setReblog = ( isNowReblog ) => {
+		setAttributes( {
+			isReblog: isNowReblog,
+		} );
+		const titleElement = document.querySelector( '.editor-post-title' );
+		if ( titleElement ) {
+			titleElement.style.display = isNowReblog ? 'none' : 'block';
+		}
+	};
+
 	// Update field content on change.
 	const onChangeContent = ( newUrl ) => {
 		setAttributes( {
 			sourceUrl: newUrl,
 		} );
+		const thisBlock = select( 'core/block-editor' ).getSelectedBlock();
+		const embedBlock = thisBlock.innerBlocks[ 0 ];
+		embedBlock.attributes.url = newUrl;
 	};
 
 	const onChangeTitle = ( newTitle ) => {
 		setAttributes( { title: newTitle } );
-		wp.data.dispatch('core/editor').editPost({title: newTitle});
-	}
+		dispatch( 'core/editor' ).editPost( { title: newTitle } );
+	};
 
 	const hasLink = '' !== sourceUrl;
 	if ( ! title ) {
-		setAttributes( { title: wp.data.select('core/editor').getEditedPostAttribute('title') } );
+		setAttributes( { title: select( 'core/editor' ).getEditedPostAttribute( 'title' ) } );
 	}
 
 	return (
 		<div className={ className }>
-			<TextControl
-				label={ __( 'Post Link', 'reblog' ) }
-				value={ sourceUrl }
-				onChange={ onChangeContent }
+			<ToggleControl
+				label="This post is a reblog"
+				checked={ isReblog }
+				onChange={ setReblog }
 			/>
-			{ isSelected && hasLink && (
-				<ToggleControl
-					label="Embed link in post"
-					checked={ showEmbed }
-					onChange={ () => setAttributes( { showEmbed: ! showEmbed } ) }
-				/>
-			) }
-			{ showEmbed ? (
-				<InnerBlocks
-					allowedBlocks={['core/embed']}
-					template={[['core/embed', {url: sourceUrl}]]}
-					templateLock="all"
-				/>
-			) : (
+			{ isReblog && ( <>
 				<TextControl
-					label={ __( 'Link Text', 'reblog' ) }
-					value={ title }
-					onChange={ onChangeTitle }
+					label={ __( 'Post Link', 'reblog' ) }
+					value={ sourceUrl }
+					onChange={ onChangeContent }
 				/>
-			) }
+				{ isSelected && hasLink && (
+					<ToggleControl
+						label="Embed link in post"
+						checked={ showEmbed }
+						onChange={ () => setAttributes( { showEmbed: ! showEmbed } ) }
+					/>
+				) }
+				{ showEmbed ? (
+					<InnerBlocks
+						allowedBlocks={ [ 'core/embed' ] }
+						template={ [ [ 'core/embed', { url: sourceUrl } ] ] }
+						templateLock="all"
+					/>
+				) : (
+					<TextControl
+						label={ __( 'Link Text', 'reblog' ) }
+						value={ title }
+						onChange={ onChangeTitle }
+					/>
+				) }
+			</> ) }
 		</div>
 	);
 }

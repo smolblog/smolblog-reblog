@@ -1,5 +1,3 @@
-// import { RawHTML } from '@wordpress/element';
-const { RawHTML } = wp.element;
 import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
@@ -17,16 +15,19 @@ import { InnerBlocks } from '@wordpress/block-editor';
 export default function Save( props ) {
 	const {
 		attributes: {
+			isReblog,
 			showEmbed,
 		},
 		className,
 	} = props;
 
-	return (
+	return isReblog ? (
 		<div className={ className }>
 			{ showEmbed && (
 				<InnerBlocks.Content />
 			) }
 		</div>
+	) : (
+		<div />
 	);
 }

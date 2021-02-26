@@ -93,6 +93,12 @@ function register_block() {
 		'show_in_rest'      => true,
 		'single'            => true,
 	]);
+	register_post_meta( 'post', 'smolblog_is_reblog', [
+		'type'         => 'boolean',
+		'default'      => false,
+		'show_in_rest' => true,
+		'single'       => true,
+	]);
 }
 add_action( 'init', __NAMESPACE__ . '\register_block' );
 

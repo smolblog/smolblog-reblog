@@ -20,6 +20,11 @@ registerBlockType( 'smolblog/reblog', {
 		__( 'Reblog', 'reblog' ),
 	],
 	attributes: {
+		isReblog: {
+			type: 'boolean',
+			source: 'meta',
+			meta: 'smolblog_is_reblog',
+		},
 		sourceUrl: {
 			type: 'string',
 			source: 'meta',
@@ -28,14 +33,9 @@ registerBlockType( 'smolblog/reblog', {
 		showEmbed: {
 			type: 'boolean',
 		},
-		embed: {
-			type: 'string',
-			source: 'html',
-			selector: 'div.smolblog-reblog-embed',
-		},
 		title: {
 			type: 'string',
-		}
+		},
 	},
 	edit,
 	save,
