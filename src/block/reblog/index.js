@@ -11,19 +11,19 @@ import './style.scss';
  * @since 0.0.1
  * @link https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'smolblog/linkblog', {
-	title: __( 'Smolblog Linkblog', 'linkblog' ),
+registerBlockType( 'smolblog/reblog', {
+	title: __( 'Smolblog Reblog', 'reblog' ),
 	icon: 'edit',
 	category: 'common',
 	keywords: [
-		__( 'Smolblog', 'linkblog' ),
-		__( 'Linkblog', 'linkblog' ),
+		__( 'Smolblog', 'reblog' ),
+		__( 'Reblog', 'reblog' ),
 	],
 	attributes: {
 		sourceUrl: {
 			type: 'string',
 			source: 'meta',
-			meta: 'smolblog_linkblog_url',
+			meta: 'smolblog_reblog_url',
 		},
 		showEmbed: {
 			type: 'boolean',
@@ -31,7 +31,7 @@ registerBlockType( 'smolblog/linkblog', {
 		embed: {
 			type: 'string',
 			source: 'html',
-			selector: 'div.smolblog-linkblog-embed',
+			selector: 'div.smolblog-reblog-embed',
 		},
 		title: {
 			type: 'string',

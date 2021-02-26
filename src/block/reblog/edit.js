@@ -45,7 +45,7 @@ export default function Edit( props ) {
 	return (
 		<div className={ className }>
 			<TextControl
-				label={ __( 'Post Link', 'linkblog' ) }
+				label={ __( 'Post Link', 'reblog' ) }
 				value={ sourceUrl }
 				onChange={ onChangeContent }
 			/>
@@ -64,7 +64,7 @@ export default function Edit( props ) {
 				/>
 			) : (
 				<TextControl
-					label={ __( 'Link Text', 'linkblog' ) }
+					label={ __( 'Link Text', 'reblog' ) }
 					value={ title }
 					onChange={ onChangeTitle }
 				/>

@@ -1,1 +1,1 @@
-import './linkblog';
+import './reblog';

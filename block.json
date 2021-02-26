@@ -1,10 +1,10 @@
 {
-	"name": "smolblog-linkblog",
-	"title": "Smolblog Linkblog",
+	"name": "smolblog-reblog",
+	"title": "Smolblog Reblog",
 	"category": "text",
 	"icon": "edit",
     "description": "A block starter for WebDevStudios projects.",
-	"textdomain": "linkblog",
+	"textdomain": "reblog",
 	"supports": {
 		"html": false
 	},

@@ -1,5 +1,5 @@
 {
-	"name": "smolblog/linkblog",
+	"name": "smolblog/reblog",
 	"description": "A block starter for WebDevStudios projects.",
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
