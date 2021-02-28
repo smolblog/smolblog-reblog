@@ -20,7 +20,6 @@ export default function Edit( props ) {
 		},
 		className,
 		setAttributes,
-		isSelected,
 	} = props;
 
 	const {
@@ -40,14 +39,18 @@ export default function Edit( props ) {
 		},
 	} = wp;
 
+	const showPostTitle = ( showTitle ) => {
+		const titleElement = document.querySelector( '.editor-post-title' );
+		if ( titleElement ) {
+			titleElement.style.display = showTitle ? 'block' : 'none';
+		}
+	};
+
 	const setReblog = ( isNowReblog ) => {
 		setAttributes( {
 			isReblog: isNowReblog,
 		} );
-		const titleElement = document.querySelector( '.editor-post-title' );
-		if ( titleElement ) {
-			titleElement.style.display = isNowReblog ? 'none' : 'block';
-		}
+		showPostTitle( ! isNowReblog );
 	};
 
 	// Update field content on change.
@@ -70,6 +73,8 @@ export default function Edit( props ) {
 		setAttributes( { title: select( 'core/editor' ).getEditedPostAttribute( 'title' ) } );
 	}
 
+	showPostTitle( ! isReblog );
+
 	return (
 		<div className={ className }>
 			<ToggleControl
@@ -83,7 +88,7 @@ export default function Edit( props ) {
 					value={ sourceUrl }
 					onChange={ onChangeContent }
 				/>
-				{ isSelected && hasLink && (
+				{ hasLink && (
 					<ToggleControl
 						label="Embed link in post"
 						checked={ showEmbed }
