@@ -131,3 +131,13 @@ function filter_content( $content ) {
 	return $content . "<p><a href=\"$post_permalink\">View on blog</a></p>";
 }
 add_filter( 'the_content_feed', __NAMESPACE__ . '\filter_content', 10, 1 );
+
+function jsonfeed_add_smollink( $feed_item, $post ){
+	$smol_link = get_smol_link();
+    if ( $smol_link ) {
+		$feed_item['external_url'] = $smol_link;
+	}
+
+    return $feed_item;
+}
+add_filter( 'json_feed_item', __NAMESPACE__ . '\jsonfeed_add_smollink', 10, 2);
